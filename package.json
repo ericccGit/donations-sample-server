@@ -21,7 +21,12 @@
     "@types/uuid": "^8.3.0"
   },
   "scripts": {
-    "test": "jest --config=./testConfig/jest.unit.config.js"
+    "start": "npm run serve",
+    "serve": "node dist/server.js",
+    "watch-node": "nodemon dist/server.js",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Eric Cromien",
   "license": "ISC"

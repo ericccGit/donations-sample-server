@@ -1,3 +1,4 @@
+import { MockModel } from "../MockModel";
 import { ObjectType, Field, ID } from "type-graphql";
 //import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 
@@ -10,7 +11,7 @@ import { ObjectType, Field, ID } from "type-graphql";
 export class User {
   [x: string]: any;
     @Field(() => ID)
-    id!: number;  
+    id!: string;  
 
     @Field()
     firstName!: String;
@@ -23,3 +24,7 @@ export class User {
     email!: String;
 
 }
+
+const initialData = [{id: '4699519a-733e-466c-9473-3da5808a3293', firstName: 'Testy', lastName: 'McTesterson', email: 'testyt@gmail.com'}]
+const UserModel = new MockModel<User>(initialData);
+export {UserModel};

@@ -1,13 +1,15 @@
-import { v4 as uuid } from 'uuid';
 
 interface IEntityWithId {
     id: string;
 }
 
+interface ISaveable<T> {
+    save: () => T;
+}
+
 export class MockModel<T extends IEntityWithId >{
 
     data: T[];
-
 
     constructor(initialData: T[]){
         this.data = [...initialData];
@@ -21,15 +23,16 @@ export class MockModel<T extends IEntityWithId >{
         return this.data.filter(x => x.id === id)
     }
 
-    create = (newObject: T) => {
-        const newId = uuid();
-        newObject.id = newId;
+    create = async (newObject: T) : Promise<ISaveable<T>> => {
         this.data.push(newObject);
-        return new Promise(resolve => resolve({save: () => {console.log(`Saved object ${newId}`)}}));
+        return new Promise(resolve => resolve({save: () => {
+            console.log(`Saved object ${newObject.id}`);
+            return newObject;
+        }}));
     }
 
     deleteOne = (id: string) => {
-        const newArr = this.data.filter(x => x.id === id)
+        const newArr = this.data.filter(x => x.id !== id)
         this.data = [...newArr];
     }
 }
