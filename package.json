@@ -14,9 +14,12 @@
     "reflect-metadata": "^0.1.13",
     "ts-node": "^10.0.0",
     "type-graphql": "^1.1.1",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.2",
+    "uuid": "^8.3.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/uuid": "^8.3.0"
+  },
   "scripts": {
     "test": "jest --config=./testConfig/jest.unit.config.js"
   },
