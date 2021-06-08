@@ -1,7 +1,9 @@
-import { Resolver, Mutation, Arg, Query } from "type-graphql";
+import { Resolver, Mutation, Arg, Query,  FieldResolver, Root  } from "type-graphql";
 import { User, UserModel } from "../entities/User";
 import { UserInput } from "./types/user-input"
 import { v4 as uuid } from 'uuid';
+import { Donation } from "../entities/Donation";
+import { DonationModel } from "../entities/Donation";
 
   
 @Resolver(_of => User)
@@ -35,4 +37,9 @@ export class UserResolver {
     return true;
   }
 
+  @FieldResolver(_type => (Donation))
+  async donations(@Root() user: User): Promise<Donation[]> {
+    //console.log(donation, "donation!")
+    return DonationModel.findByCondition(d=> d.userId === user.id );
+  }
 }

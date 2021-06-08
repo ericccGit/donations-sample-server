@@ -31,6 +31,10 @@ export class MockModel<T extends IEntityWithId >{
         }}));
     }
 
+    findByCondition = (cond:((ent: T) => boolean)) => {
+        return this.data.filter(cond);
+    }
+
     deleteOne = (id: string) => {
         const newArr = this.data.filter(x => x.id !== id)
         this.data = [...newArr];
