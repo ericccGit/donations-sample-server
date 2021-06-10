@@ -3,18 +3,38 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""The Donation model"""
+type Donation {
+  amount: Float!
+  id: ID!
+  tip: Float!
+  user: User!
+  userId: String!
+}
+
+input DonationInput {
+  amount: Float!
+  tip: Float!
+  userId: String!
+}
+
 type Mutation {
+  createDonation(data: DonationInput!): Donation!
   createUser(data: UserInput!): User!
+  deleteDonation(id: String!): Boolean!
   deleteUser(id: String!): Boolean!
 }
 
 type Query {
+  returnAllDonations: [Donation!]!
   returnAllUsers: [User!]!
+  returnSingleDonation(id: String!): Donation!
   returnSingleUser(id: String!): User!
 }
 
 """The User model"""
 type User {
+  donations: [Donation!]!
   email: String!
   firstName: String!
   id: ID!

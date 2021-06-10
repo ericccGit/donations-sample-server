@@ -18,18 +18,17 @@ require("reflect-metadata");
 const type_graphql_1 = require("type-graphql");
 // resolvers
 const User_1 = require("./resolvers/User");
-//import {DonationsResolver} from "./resolvers/Donations";
-//import {CategoriesResolver} from "./resolvers/Categories";
-//import {CartResolver} from "./resolvers/Cart";
-//import {OrderResolver} from "./resolvers/Order";
+const Donation_1 = require("./resolvers/Donation");
+const cors_1 = __importDefault(require("cors"));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const schema = yield type_graphql_1.buildSchema({
-        resolvers: [User_1.UserResolver],
+        resolvers: [User_1.UserResolver, Donation_1.DonationResolver],
         emitSchemaFile: true,
         validate: false,
     });
     const server = new apollo_server_express_1.ApolloServer({ schema });
     const app = express_1.default();
+    app.use(cors_1.default());
     //@ts-ignore
     server.applyMiddleware({ app });
     app.listen({ port: 3333 }, () => console.log(`🚀 Server ready and listening at ==> http://localhost:3333${server.graphqlPath}`));

@@ -1,11 +1,8 @@
-  
-import { InputType, Field} from "type-graphql";
+import { InputType, Field } from "type-graphql";
 import { Donation } from "../../entities/Donation";
-
 
 @InputType()
 export class DonationInput implements Partial<Donation> {
-
   @Field()
   amount!: number;
 
@@ -13,6 +10,5 @@ export class DonationInput implements Partial<Donation> {
   tip!: number;
 
   @Field()
-  userId!: String;
-  
+  userId!: string;
 }

@@ -10,14 +10,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MockModel = void 0;
+/**
+ * Intended as a rough mock of the DB Models generated if
+ * using Mongoose/Typegoose, that instead just stores the data
+ * in memory.
+ *
+ * It is not a 100% accurate mock as that would have been
+ * needlessly complicated for this excerise.
+ *
+ */
 class MockModel {
     constructor(initialData) {
-        this.find = () => {
+        this.find = () => __awaiter(this, void 0, void 0, function* () {
             return this.data;
-        };
-        this.findById = (id) => {
+        });
+        this.findById = (id) => __awaiter(this, void 0, void 0, function* () {
             return this.data.filter(x => x.id === id);
-        };
+        });
         this.create = (newObject) => __awaiter(this, void 0, void 0, function* () {
             this.data.push(newObject);
             return new Promise(resolve => resolve({ save: () => {
@@ -25,13 +34,13 @@ class MockModel {
                     return newObject;
                 } }));
         });
-        this.findByCondition = (cond) => {
+        this.findByCondition = (cond) => __awaiter(this, void 0, void 0, function* () {
             return this.data.filter(cond);
-        };
-        this.deleteOne = (id) => {
+        });
+        this.deleteOne = (id) => __awaiter(this, void 0, void 0, function* () {
             const newArr = this.data.filter(x => x.id !== id);
             this.data = [...newArr];
-        };
+        });
         this.data = [...initialData];
     }
 }

@@ -21,96 +21,85 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserResolver = void 0;
+exports.DonationResolver = void 0;
 const type_graphql_1 = require("type-graphql");
-const User_1 = require("../entities/User");
-const user_input_1 = require("./types/user-input");
-const uuid_1 = require("uuid");
 const Donation_1 = require("../entities/Donation");
-const Donation_2 = require("../entities/Donation");
-/**
- * As I had not used Type-GraphQL before I was basing a lot
- * off the code off of this tutorial:
- * https://blog.logrocket.com/integrating-typescript-graphql/
- *
- * I also wrote the server first so not all of the queries/mutations
- * are needed by the client, however for the purpose of this exercise
- * (and because it's a decoupled API anyways) I kept them around.
- *
- */
-let UserResolver = class UserResolver {
-    returnSingleUser(id) {
+const donation_input_1 = require("./types/donation-input");
+const uuid_1 = require("uuid");
+const User_1 = require("../entities/User");
+let DonationResolver = class DonationResolver {
+    returnSingleDonation(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield User_1.UserModel.findById(id);
+            return yield Donation_1.DonationModel.findById(id);
         });
     }
     ;
-    returnAllUsers() {
+    returnAllDonations() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield User_1.UserModel.find();
+            return yield Donation_1.DonationModel.find();
         });
     }
     ;
-    createUser({ firstName, lastName, email }) {
+    createDonation({ amount, tip, userId }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = (yield User_1.UserModel.create({
+            const Donation = (yield Donation_1.DonationModel.create({
                 id: uuid_1.v4(),
-                firstName,
-                lastName,
-                email
+                amount, tip, userId
             })).save();
-            return user;
+            return Donation;
         });
     }
     ;
-    deleteUser(id) {
+    deleteDonation(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield User_1.UserModel.deleteOne(id);
+            yield Donation_1.DonationModel.deleteOne(id);
             return true;
         });
     }
-    donations(user) {
+    user(donation) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Donation_2.DonationModel.findByCondition(d => d.userId === user.id);
+            const users = yield User_1.UserModel.findById(donation.userId);
+            //Assuming here that there will always be a user for the donation.
+            return users[0];
         });
     }
 };
 __decorate([
-    type_graphql_1.Query(_returns => User_1.User, { nullable: false }),
+    type_graphql_1.Query(_returns => Donation_1.Donation, { nullable: false }),
     __param(0, type_graphql_1.Arg("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], UserResolver.prototype, "returnSingleUser", null);
+], DonationResolver.prototype, "returnSingleDonation", null);
 __decorate([
-    type_graphql_1.Query(() => [User_1.User]),
+    type_graphql_1.Query(() => [Donation_1.Donation]),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], UserResolver.prototype, "returnAllUsers", null);
+], DonationResolver.prototype, "returnAllDonations", null);
 __decorate([
-    type_graphql_1.Mutation(() => User_1.User),
+    type_graphql_1.Mutation(() => Donation_1.Donation),
     __param(0, type_graphql_1.Arg("data")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_input_1.UserInput]),
+    __metadata("design:paramtypes", [donation_input_1.DonationInput]),
     __metadata("design:returntype", Promise)
-], UserResolver.prototype, "createUser", null);
+], DonationResolver.prototype, "createDonation", null);
 __decorate([
     type_graphql_1.Mutation(() => Boolean),
     __param(0, type_graphql_1.Arg("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], UserResolver.prototype, "deleteUser", null);
+], DonationResolver.prototype, "deleteDonation", null);
 __decorate([
-    type_graphql_1.FieldResolver(_type => ([Donation_1.Donation])),
+    type_graphql_1.FieldResolver(_type => (User_1.User)),
     __param(0, type_graphql_1.Root()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [User_1.User]),
+    __metadata("design:paramtypes", [Donation_1.Donation]),
     __metadata("design:returntype", Promise)
-], UserResolver.prototype, "donations", null);
-UserResolver = __decorate([
-    type_graphql_1.Resolver(_of => User_1.User)
-], UserResolver);
-exports.UserResolver = UserResolver;
-//# sourceMappingURL=User.js.map
+], DonationResolver.prototype, "user", null);
+DonationResolver = __decorate([
+    type_graphql_1.Resolver(_of => Donation_1.Donation)
+], DonationResolver);
+exports.DonationResolver = DonationResolver;
+//# sourceMappingURL=Donation.js.map
