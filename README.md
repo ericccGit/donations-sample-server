@@ -1,5 +1,5 @@
 # donations-sample-server
-Sample Express / TypeGraphQL retrieving and adding to a list of donations, saved in memory
+Sample Express / TypeGraphQL server for retrieving and adding to a list of donations, saved in memory
 
 ## Installation
 Install dependencies with NPM package manager.
